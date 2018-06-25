@@ -1,0 +1,65 @@
+{
+	"type":"Sprite3D",
+	"props":{
+		"name":"ball"
+	},
+	"customProps":{
+		"translate":[
+			0,
+			0,
+			0
+		],
+		"rotation":[
+			0,
+			0,
+			0,
+			-1
+		],
+		"scale":[
+			1,
+			1,
+			1
+		]
+	},
+	"child":[
+		{
+			"type":"MeshSprite3D",
+			"props":{
+				"isStatic":false,
+				"name":"football"
+			},
+			"customProps":{
+				"layer":0,
+				"translate":[
+					0,
+					0,
+					0
+				],
+				"rotation":[
+					0,
+					0,
+					0,
+					-1
+				],
+				"scale":[
+					1,
+					1,
+					1
+				],
+				"meshPath":"Assets/Simple soccer & basketball/Soccer/Models/soccer ball-soccer ball.lm",
+				"materials":[
+					{
+						"type":"Laya.StandardMaterial",
+						"path":"Assets/Simple soccer & basketball/Soccer/Models/Materials/ball black.lmat"
+					},
+					{
+						"type":"Laya.StandardMaterial",
+						"path":"Assets/Simple soccer & basketball/Soccer/Models/Materials/ball white.lmat"
+					}
+				]
+			},
+			"components":{},
+			"child":[]
+		}
+	]
+}
