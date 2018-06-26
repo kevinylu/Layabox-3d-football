@@ -5,4 +5,7 @@ LayaAir IDE [1.7.16 download](http://ldc.layabox.com/layadownload/?language=zh&t
 
 [LayaBox-LayaAir-UnityPlugin](https://github.com/kevinylu/LayaBox-LayaAir-UnityPlugin) export 3d model form Unity to LayaAir IDE 1.7.16
 
-**Demo**  [Get Start](http://layaair.ldc.layabox.com/demo/?3d&Sprite3D&Sprite3DLoad)
+**3d sprite**  [Get Start](http://layaair.ldc.layabox.com/demo/?3d&Sprite3D&Sprite3DLoad)
+
+**Preview**
+![Alt Text](http://www.smartzeta.com/gifs/football.gif)
