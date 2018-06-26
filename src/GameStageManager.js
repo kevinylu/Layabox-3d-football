@@ -8,7 +8,7 @@ Laya.stage.screenMode = Laya.Stage.SCREEN_NONE;
 //Show performance stat
 Laya.Stat.show();
 //Load 3D Assets
-Laya.loader.create(["3dAssets/pitch/pitch.ls", "3dAssets/football/ball.lh"],Laya.Handler.create(this,on3DComplete));
+Laya.loader.create(["3dAssets/pitch/pitch.ls", "3dAssets/skyBox/skyCube.ltc", "3dAssets/football/ball.lh"],Laya.Handler.create(this,on3DComplete));
 
 //
 var gamestart_scene;
@@ -87,8 +87,13 @@ function on3DComplete() {
 
 	//Create camera
 	camera = new Laya.Camera(0, 0.1, 1000);
+    camera.clearFlag = Laya.BaseCamera.CLEARFLAG_SKY;
 	//Add camera to scene
 	main_scene.addChild(camera);
+
+    var skyBox = new Laya.SkyBox();
+    skyBox.textureCube = Laya.TextureCube.load("3dAssets/skyBox/skyCube.ltc");
+    camera.sky = skyBox;
 	
 	//Add 2d resources form ..laya/pages
 	Laya.loader.load("res/atlas/comp.atlas",Laya.Handler.create(null, showGameStart),null,Laya.Loader.ATLAS);

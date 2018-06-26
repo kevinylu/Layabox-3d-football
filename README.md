@@ -13,4 +13,8 @@ LayaAir IDE [1.7.16 download](http://ldc.layabox.com/layadownload/?language=zh&t
 <img src="https://www.smartzeta.com/gifs/football.gif" width="272" height="480" />
 
 
+## Skybox
+
+<img src="https://www.smartzeta.com/laya/images/skybox_map.jpg" width="500" height="375" />
+
 #### License MIT
