@@ -9,4 +9,4 @@ LayaAir IDE [1.7.16 download](http://ldc.layabox.com/layadownload/?language=zh&t
 
 **Preview**
 
-![Alt Text](https://www.smartzeta.com/gifs/football.gif)
+<img src="https://www.smartzeta.com/gifs/football.gif" width="272" height="480" />
