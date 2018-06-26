@@ -1,22 +1,36 @@
 CLASS$(function () {
     this.__super.call(this);
     Laya.stage.on(Laya.Event.MOUSE_DOWN,this,onMouseDown);
+    Laya.stage.on(Laya.Event.MOUSE_UP,this,onMouseUp);
 },'GamePlayScene',ui.GamePlaySceneUI);
 
 var gameReady = false;
 
-function onMouseDown()
-{
-    if (!gameReady || settings.tweening){
+var touchBeginPoint = new Laya.Vector2();
+var touchEndPoint = new Laya.Vector2();
+function onMouseDown() {
+    touchBeginPoint.elements[0] = Laya.stage.mouseX;
+    touchBeginPoint.elements[1] = Laya.stage.mouseY;
+}
+
+function onMouseUp() {
+    if (!gameReady || settings.tweening || Laya.stage.mouseY < this.pauseBtn.y + this.pauseBtn.height){
         return;
     }
-    console.log("onMouseDown");
+    touchEndPoint.elements[0] = Laya.stage.mouseX;
+    touchEndPoint.elements[1] = Laya.stage.mouseY;
     shootBall();
 }
 
-function shootBall(){
+function shootBall() {
+    var side = 4;
+    if (touchEndPoint.elements[0] == touchBeginPoint.elements[0]) {
+        side = 0;
+    } else if (touchEndPoint.elements[0] > touchBeginPoint.elements[0]) {
+        side = -4;
+    }
     var relativeTween = new TWEEN.Tween(ballPosition)
-                        .to({x:4, y:4.16, z: 15 }, 500)
+                        .to({x:side, y:4.16, z: 15 }, 500)
                         .onUpdate(function(object) {
                             settings.tweening = true;
 	                    })
