@@ -94,13 +94,18 @@ function on3DComplete() {
 	Laya.loader.load("res/atlas/comp.atlas",Laya.Handler.create(null, showGameStart),null,Laya.Loader.ATLAS);
 }
 
-function showGameStart() {
-
+function resetPosition() {
+    //Reset ball position
+    ballPosition = new Laya.Vector3(0, 2.16, -5);
+    ball.transform.position = ballPosition;
     //Set camera position and rotate
     cameraPosition = new Laya.Vector3(3, 20, 25);
     camera.transform.position = cameraPosition;
     camera.transform.lookAt(ballPosition, new Laya.Vector3(0, 180, 0), false);
+}
 
+function showGameStart() {
+    resetPosition();
     if(gamestart_scene == undefined){
          gamestart_scene = new GameStartScene();
          gamestart_scene.startBtn.on(Laya.Event.CLICK,gamestart_scene,function(){
@@ -114,7 +119,7 @@ function showGameStart() {
 }
 
 function showGamePlay(){
-
+    resetPosition();
     if(gameplay_scene == undefined){
         gameplay_scene = new GamePlayScene();
 		gameplay_scene.pauseBtn.on(Laya.Event.CLICK,gameplay_scene,function(){
