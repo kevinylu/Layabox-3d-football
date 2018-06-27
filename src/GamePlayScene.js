@@ -36,6 +36,7 @@ function shootBall() {
 	                    })
                         .onComplete(function(){
                             settings.tweening = false;
+                            ballSphereBody.position = new CANNON.Vec3(ballPosition.x, ballPosition.z, ballPosition.y);
                         });
     relativeTween.start();
 }
@@ -49,25 +50,25 @@ function setCamaraPosition() {
                         .onComplete(function(){
                             settings.tweening = false;
                             gameReady = true;
+                            gameplay_scene.pauseBtn.visible = true;
                         });
     relativeTween.start();
 }
 
 GamePlayScene.prototype.restart = function() {
     settings.paused = false;
-    console.log("restart");
+    //console.log("restart");
     setCamaraPosition();
 }
 
 GamePlayScene.prototype.pause = function() {
-    console.log("pause");
+    //console.log("pause");
     showGamePause();
     settings.paused = true;
     gameReady = false;
 }
 
 GamePlayScene.prototype.tweenUpdate = function() {
-    //TODO
     if (!gameReady){
         camera.transform.position = cameraPosition;
         camera.transform.lookAt(ballPosition, new Laya.Vector3(0, 180, 0), false);
@@ -78,5 +79,5 @@ GamePlayScene.prototype.tweenUpdate = function() {
 }
 
 GamePlayScene.prototype.cannonUpdate = function() {
-    //TODO
+    ballPosition = new Laya.Vector3(ballSphereBody.position.x, ballSphereBody.position.z, ballSphereBody.position.y);
 }

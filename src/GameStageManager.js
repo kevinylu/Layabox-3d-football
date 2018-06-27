@@ -75,6 +75,26 @@ function simloop(time) {
 }
 simloop();
 
+// CannonJS objects
+// Create a sphere
+var radius = 1; // m
+var ballSphereBody = new CANNON.Body({
+   mass: 5, // kg
+   position: new CANNON.Vec3(0, -5, 2.16), // m
+   shape: new CANNON.Sphere(radius)
+});
+cannonWorld.addBody(ballSphereBody);
+
+// Create a plane
+var groundBody = new CANNON.Body({
+    mass: 0, // mass == 0 makes the body static
+    position: new CANNON.Vec3(0, 0, 1.16)
+});
+var groundShape = new CANNON.Plane();
+groundBody.addShape(groundShape);
+cannonWorld.addBody(groundBody);
+
+//Laya 3d
 function on3DComplete() {
     console.log("on3DComplete");
     //Add Unity scene 
@@ -86,9 +106,9 @@ function on3DComplete() {
     ball = Laya.loader.getRes("3dAssets/football/ball.lh");
     ball.transform.localScale = scale;
     main_scene.addChild(ball);
-    ballPosition = new Laya.Vector3(0, 2.16, -5);
+    ballPosition = new Laya.Vector3(0, 0, 0);
     ball.transform.position = ballPosition;
-
+    
     //Create camera
     camera = new Laya.Camera(0, 0.1, 1000);
     camera.clearFlag = Laya.BaseCamera.CLEARFLAG_SKY;
@@ -119,6 +139,7 @@ function resetPosition() {
     //Reset ball position
     ballPosition = new Laya.Vector3(0, 2.16, -5);
     ball.transform.position = ballPosition;
+    ballSphereBody.position = new CANNON.Vec3(ballPosition.x, ballPosition.z, ballPosition.y);
     //Set camera position and rotate
     cameraPosition = new Laya.Vector3(3, 20, 25);
     camera.transform.position = cameraPosition;
@@ -144,6 +165,7 @@ function showGamePlay() {
     resetPosition();
     if (gameplay_scene == undefined) {
         gameplay_scene = new GamePlayScene();
+        gameplay_scene.pauseBtn.visible = false;
         gameplay_scene.pauseBtn.on(Laya.Event.CLICK, gameplay_scene, function () {
             this.removeSelf();
             gameplay_scene.pause();
