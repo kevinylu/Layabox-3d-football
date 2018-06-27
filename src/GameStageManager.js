@@ -8,14 +8,18 @@ Laya.stage.screenMode = Laya.Stage.SCREEN_NONE;
 //Show performance stat
 Laya.Stat.show();
 //Load 3D Assets
-Laya.loader.create(["3dAssets/pitch/pitch.ls", "3dAssets/skyBox/skyCube.ltc", "3dAssets/football/ball.lh"], Laya.Handler.create(this, on3DComplete));
+Laya.loader.create(["3dAssets/pitch/pitch.ls", "3dAssets/skyBox1/skyCube.ltc", "3dAssets/skyBox2/skyCube.ltc","3dAssets/football/ball.lh"], Laya.Handler.create(this, on3DComplete));
 
 //
 var gamestart_scene;
 var gameplay_scene;
 var gamepause_scene;
 var main_scene;
+
+//
 var camera;
+var skyBox1;
+var skyBox2;
 
 //
 var cameraPosition;
@@ -91,12 +95,24 @@ function on3DComplete() {
     //Add camera to scene
     main_scene.addChild(camera);
 
-    var skyBox = new Laya.SkyBox();
-    skyBox.textureCube = Laya.TextureCube.load("3dAssets/skyBox/skyCube.ltc");
-    camera.sky = skyBox;
+    skyBox1 = new Laya.SkyBox();
+    skyBox1.textureCube = Laya.TextureCube.load("3dAssets/skyBox1/skyCube.ltc");
+
+    skyBox2 = new Laya.SkyBox();
+    skyBox2.textureCube = Laya.TextureCube.load("3dAssets/skyBox2/skyCube.ltc");
 
     //Add 2d resources form ..laya/pages
     Laya.loader.load("res/atlas/comp.atlas", Laya.Handler.create(null, showGameStart), null, Laya.Loader.ATLAS);
+}
+
+function resetSkybox() {
+    var random = Math.round(Math.random());
+    console.log("random" + random);
+    if (random == 0){
+        camera.sky = skyBox1;
+    } else {
+        camera.sky = skyBox2;
+    }
 }
 
 function resetPosition() {
@@ -111,6 +127,7 @@ function resetPosition() {
 
 function showGameStart() {
     resetPosition();
+    resetSkybox();
     if (gamestart_scene == undefined) {
         gamestart_scene = new GameStartScene();
         gamestart_scene.startBtn.on(Laya.Event.CLICK, gamestart_scene, function () {

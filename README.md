@@ -23,7 +23,7 @@ LayaAir IDE [1.7.16 download](http://ldc.layabox.com/layadownload/?language=zh&t
 "px": "px_left.jpg",
 "nx": "nx_right.jpg",
 "py": "py_up.jpg",
-"ny": "ny_right.jpg",
+"ny": "ny_down.jpg",
 "pz": "pz_front.jpg",
 "nz": "nz_back.jpg",
 "size": 256
