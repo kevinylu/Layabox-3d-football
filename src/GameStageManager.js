@@ -8,7 +8,11 @@ Laya.stage.screenMode = Laya.Stage.SCREEN_NONE;
 //Show performance stat
 Laya.Stat.show();
 //Load 3D Assets
-Laya.loader.create(["3dAssets/pitch/pitch.ls", "3dAssets/skyBox1/skyCube.ltc", "3dAssets/skyBox2/skyCube.ltc","3dAssets/football/ball.lh"], Laya.Handler.create(this, on3DComplete));
+var pitchRes = "res/3dAssets/pitch/pitch.ls";
+var skyBox1Res = "res/3dAssets/skyBox1/skyCube.ltc";
+var skyBox2Res = "res/3dAssets/skyBox2/skyCube.ltc";
+var footballRes = "res/3dAssets/football/ball.lh";
+Laya.loader.create([pitchRes, skyBox1Res, skyBox2Res, footballRes], Laya.Handler.create(this, on3DComplete));
 
 //
 var gamestart_scene;
@@ -98,12 +102,12 @@ cannonWorld.addBody(groundBody);
 function on3DComplete() {
     console.log("on3DComplete");
     //Add Unity scene 
-    main_scene = Laya.Scene.load("3dAssets/pitch/pitch.ls");
+    main_scene = Laya.Scene.load(pitchRes);
     Laya.stage.addChild(main_scene);
 
     var scale = new Laya.Vector3();
     scale.x = scale.y = scale.z = 1;
-    ball = Laya.loader.getRes("3dAssets/football/ball.lh");
+    ball = Laya.loader.getRes(footballRes);
     ball.transform.localScale = scale;
     main_scene.addChild(ball);
     ballPosition = new Laya.Vector3(0, 0, 0);
@@ -124,10 +128,10 @@ function on3DComplete() {
     main_scene.addChild(directionLight);
 
     skyBox1 = new Laya.SkyBox();
-    skyBox1.textureCube = Laya.TextureCube.load("3dAssets/skyBox1/skyCube.ltc");
+    skyBox1.textureCube = Laya.TextureCube.load(skyBox1Res);
 
     skyBox2 = new Laya.SkyBox();
-    skyBox2.textureCube = Laya.TextureCube.load("3dAssets/skyBox2/skyCube.ltc");
+    skyBox2.textureCube = Laya.TextureCube.load(skyBox2Res);
 
     //Add 2d resources form ..laya/pages
     Laya.loader.load("res/atlas/comp.atlas", Laya.Handler.create(null, showGameStart), null, Laya.Loader.ATLAS);
