@@ -19,18 +19,34 @@ function onMouseUp() {
     }
     touchEndPoint.elements[0] = Laya.stage.mouseX;
     touchEndPoint.elements[1] = Laya.stage.mouseY;
-    shootBall();
+
+    var point = new laya.maths.Point(touchBeginPoint.elements[0],touchBeginPoint.elements[1]);
+    var distance = point.distance(touchEndPoint.elements[0],touchEndPoint.elements[1]);
+    shootBall(distance);
 }
 
-function shootBall() {
-    var side = 4;
-    if (touchEndPoint.elements[0] == touchBeginPoint.elements[0]) {
-        side = 0;
-    } else if (touchEndPoint.elements[0] > touchBeginPoint.elements[0]) {
-        side = -4;
+function shootBall(distance) {
+    var h = distance/30;
+    if (touchEndPoint.elements[0] - touchBeginPoint.elements[0] > 0) {
+        h = -1 * h;
     }
+
+    var v = 2.16 + Math.abs(touchEndPoint.elements[1] - touchBeginPoint.elements[1])/60;
     var relativeTween = new TWEEN.Tween(ballPosition)
-                        .to({x:side, y:4.16, z: 15 }, 500)
+                        .to({x:h, y:v, z: 15 }, 500)
+                        .onUpdate(function(object) {
+                            settings.tweening = true;
+	                    })
+                        .onComplete(function(){
+                            settings.tweening = false;
+                            ballSphereBody.position = new CANNON.Vec3(ballPosition.x, ballPosition.z, ballPosition.y);
+                        });
+    relativeTween.start();
+}
+
+function resetBall() {
+    var relativeTween = new TWEEN.Tween(ballPosition)
+                        .to({x:0, y:2.16, z: -5 }, 1000)
                         .onUpdate(function(object) {
                             settings.tweening = true;
 	                    })
@@ -75,9 +91,17 @@ GamePlayScene.prototype.tweenUpdate = function() {
     }
     else{
         ball.transform.position = ballPosition;
+        if (settings.tweening){
+            var _rotate = new Laya.Vector3(20, 0, 0);
+            ball.transform.rotate(_rotate, false, false);
+        }
     }
 }
 
 GamePlayScene.prototype.cannonUpdate = function() {
     ballPosition = new Laya.Vector3(ballSphereBody.position.x, ballSphereBody.position.z, ballSphereBody.position.y);
+    if (ballPosition.y <= 2.16 && ballPosition.z == 15)
+    {
+        resetBall();
+    }
 }

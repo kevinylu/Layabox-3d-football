@@ -79,9 +79,9 @@ simloop();
 // Create a sphere
 var radius = 1; // m
 var ballSphereBody = new CANNON.Body({
-   mass: 5, // kg
-   position: new CANNON.Vec3(0, -5, 2.16), // m
-   shape: new CANNON.Sphere(radius)
+    mass: 5, // kg
+    position: new CANNON.Vec3(0, -5, 2.16), // m
+    shape: new CANNON.Sphere(radius)
 });
 cannonWorld.addBody(ballSphereBody);
 
@@ -108,12 +108,20 @@ function on3DComplete() {
     main_scene.addChild(ball);
     ballPosition = new Laya.Vector3(0, 0, 0);
     ball.transform.position = ballPosition;
-    
+
     //Create camera
     camera = new Laya.Camera(0, 0.1, 1000);
     camera.clearFlag = Laya.BaseCamera.CLEARFLAG_SKY;
     //Add camera to scene
     main_scene.addChild(camera);
+
+    //Direction Light
+    var directionLight = new Laya.DirectionLight();
+    directionLight.ambientColor = new Laya.Vector3(0.6, 0.6, 0.6);
+    directionLight.specularColor = new Laya.Vector3(0.6, 0.6, 0.6);
+    directionLight.diffuseColor = new Laya.Vector3(2, 2, 2);
+    directionLight.direction = new Laya.Vector3(1, -1, 0);
+    main_scene.addChild(directionLight);
 
     skyBox1 = new Laya.SkyBox();
     skyBox1.textureCube = Laya.TextureCube.load("3dAssets/skyBox1/skyCube.ltc");
@@ -128,7 +136,7 @@ function on3DComplete() {
 function resetSkybox() {
     var random = Math.round(Math.random());
     console.log("random" + random);
-    if (random == 0){
+    if (random == 0) {
         camera.sky = skyBox1;
     } else {
         camera.sky = skyBox2;
