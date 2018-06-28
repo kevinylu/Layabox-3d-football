@@ -5,6 +5,7 @@ CLASS$(function () {
 },'GamePlayScene',ui.GamePlaySceneUI);
 
 var gameReady = false;
+var ballFlying = false;
 
 var touchBeginPoint = new Laya.Vector2();
 var touchEndPoint = new Laya.Vector2();
@@ -35,9 +36,11 @@ function shootBall(distance) {
     var relativeTween = new TWEEN.Tween(ballPosition)
                         .to({x:h, y:v, z: 15 }, 500)
                         .onUpdate(function(object) {
+                            ballFlying = true;
                             settings.tweening = true;
 	                    })
                         .onComplete(function(){
+                            ballFlying = false;
                             settings.tweening = false;
                             ballSphereBody.position = new CANNON.Vec3(ballPosition.x, ballPosition.z, ballPosition.y);
                         });
@@ -91,7 +94,7 @@ GamePlayScene.prototype.tweenUpdate = function() {
     }
     else{
         ball.transform.position = ballPosition;
-        if (settings.tweening){
+        if (ballFlying){
             var _rotate = new Laya.Vector3(20, 0, 0);
             ball.transform.rotate(_rotate, false, false);
         }
@@ -102,6 +105,7 @@ GamePlayScene.prototype.cannonUpdate = function() {
     ballPosition = new Laya.Vector3(ballSphereBody.position.x, ballSphereBody.position.z, ballSphereBody.position.y);
     if (ballPosition.y <= 2.16 && ballPosition.z == 15)
     {
-        resetBall();
+        settings.tweening = true;
+        Laya.timer.once(500,this,resetBall);
     }
 }
