@@ -5,7 +5,7 @@ var Dialog=laya.ui.Dialog;
 var GamePauseSceneUI=(function(_super){
 		function GamePauseSceneUI(){
 			
-		    this.restartBtn=null;
+		    this.resumeBtn=null;
 		    this.exitBtn=null;
 
 			GamePauseSceneUI.__super.call(this);
@@ -20,13 +20,16 @@ var GamePauseSceneUI=(function(_super){
 
 		}
 
-		GamePauseSceneUI.uiView={"type":"View","props":{"width":360,"height":640},"child":[{"type":"Label","props":{"y":162,"x":151,"text":"Pause"}},{"type":"Button","props":{"y":332,"x":88,"var":"restartBtn","skin":"comp/button.png","label":"RESTART"}},{"type":"Button","props":{"y":333,"x":205,"var":"exitBtn","skin":"comp/button.png","label":"EXIT"}}]};
+		GamePauseSceneUI.uiView={"type":"View","props":{"width":360,"height":640},"child":[{"type":"Button","props":{"width":0,"var":"resumeBtn","stateNum":1,"skin":"comp/asset-resume-btn.png","scaleY":0.5,"scaleX":0.5,"centerX":-70,"bottom":200}},{"type":"Button","props":{"var":"exitBtn","stateNum":1,"skin":"comp/asset-exit-btn.png","scaleY":0.5,"scaleX":0.5,"centerX":70,"bottom":200}}]};
 		return GamePauseSceneUI;
 	})(View);
 var GamePlaySceneUI=(function(_super){
 		function GamePlaySceneUI(){
 			
 		    this.pauseBtn=null;
+		    this.ballImage1=null;
+		    this.ballImage2=null;
+		    this.ballImage3=null;
 
 			GamePlaySceneUI.__super.call(this);
 		}
@@ -40,7 +43,7 @@ var GamePlaySceneUI=(function(_super){
 
 		}
 
-		GamePlaySceneUI.uiView={"type":"View","props":{"width":360,"height":640},"child":[{"type":"Button","props":{"y":22,"x":268,"var":"pauseBtn","stateNum":3,"skin":"comp/button.png","label":"PAUSE"}}]};
+		GamePlaySceneUI.uiView={"type":"View","props":{"width":360,"height":640},"child":[{"type":"Button","props":{"var":"pauseBtn","top":20,"stateNum":1,"skin":"comp/asset-pause-btn.png","scaleY":0.5,"scaleX":0.5,"right":20}},{"type":"Image","props":{"var":"ballImage1","top":40,"skin":"comp/asset-football-icon.png","scaleY":0.05,"scaleX":0.05,"centerX":-40}},{"type":"Image","props":{"var":"ballImage2","top":40,"skin":"comp/asset-football-icon.png","scaleY":0.05,"scaleX":0.05,"centerX":0}},{"type":"Image","props":{"var":"ballImage3","top":40,"skin":"comp/asset-football-icon.png","scaleY":0.05,"scaleX":0.05,"centerX":40}}]};
 		return GamePlaySceneUI;
 	})(View);
 var GameStartSceneUI=(function(_super){
@@ -60,6 +63,6 @@ var GameStartSceneUI=(function(_super){
 
 		}
 
-		GameStartSceneUI.uiView={"type":"View","props":{"width":360,"height":640},"child":[{"type":"Button","props":{"y":513,"x":147,"var":"startBtn","skin":"comp/button.png","label":"START"}}]};
+		GameStartSceneUI.uiView={"type":"View","props":{"width":360,"height":640},"child":[{"type":"Button","props":{"var":"startBtn","stateNum":1,"skin":"comp/asset-play-btn.png","scaleY":0.5,"scaleX":0.5,"centerX":0,"bottom":200}}]};
 		return GameStartSceneUI;
 	})(View);

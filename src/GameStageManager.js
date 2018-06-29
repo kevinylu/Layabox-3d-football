@@ -1,10 +1,9 @@
 //Init Laya3d engine
 Laya3D.init(360, 640, true);
 //Screen setting
-Laya.stage.scaleMode = Laya.Stage.SCALE_NOSCALE;
 Laya.stage.alignH = Laya.Stage.ALIGN_CENTER;
 Laya.stage.alignV = Laya.Stage.ALIGN_MIDDLE;
-Laya.stage.screenMode = Laya.Stage.SCREEN_NONE;
+Laya.stage.scaleMode = Laya.Stage.SCALE_FIXED_WIDTH;
 //Show performance stat
 Laya.Stat.show();
 //Load 3D Assets
@@ -13,7 +12,6 @@ var skyBox1Res = "res/3dAssets/skyBox1/skyCube.ltc";
 var skyBox2Res = "res/3dAssets/skyBox2/skyCube.ltc";
 var footballRes = "res/3dAssets/football/ball.lh";
 Laya.loader.create([pitchRes, skyBox1Res, skyBox2Res, footballRes], Laya.Handler.create(this, on3DComplete));
-
 //
 var gamestart_scene;
 var gameplay_scene;
@@ -28,6 +26,9 @@ var skyBox2;
 //
 var cameraPosition;
 var ballPosition;
+
+//
+var scoreTxt;
 
 // Init Tweenjs update
 Laya.timer.frameLoop(1, this, tweenUpdate);
@@ -134,7 +135,28 @@ function on3DComplete() {
     skyBox2.textureCube = Laya.TextureCube.load(skyBox2Res);
 
     //Add 2d resources form ..laya/pages
-    Laya.loader.load("res/atlas/comp.atlas", Laya.Handler.create(null, showGameStart), null, Laya.Loader.ATLAS);
+    Laya.loader.load("res/atlas/comp.atlas", Laya.Handler.create(null, on2DComplete), null, Laya.Loader.ATLAS);
+}
+
+function on2DComplete() {
+    //Bitmap Font
+    this.mFontName = "Skranji";
+    this.mBitmapFont = new Laya.BitmapFont();
+    this.mBitmapFont.loadFont("res/bitmapFont/Skranji-Bold-40.fnt", new Laya.Handler(this, onFontComplete));
+}
+
+function onFontComplete() {
+    Laya.Text.registerBitmapFont(this.mFontName, this.mBitmapFont);
+    if (scoreTxt == undefined) {
+        scoreTxt = new Laya.Text();
+        scoreTxt.width = 360;
+        scoreTxt.wordWrap = true;
+        scoreTxt.align = "center";
+        scoreTxt.font = this.mFontName;
+        scoreTxt.pos(0, 450);
+    }
+
+    showGameStart();
 }
 
 function resetSkybox() {
@@ -164,8 +186,7 @@ function showGameStart() {
     if (gamestart_scene == undefined) {
         gamestart_scene = new GameStartScene();
         gamestart_scene.startBtn.on(Laya.Event.CLICK, gamestart_scene, function () {
-
-            this.removeSelf();
+            gamestart_scene.removeSelf();
             showGamePlay();
         })
     }
@@ -175,34 +196,32 @@ function showGameStart() {
 
 function showGamePlay() {
     resetPosition();
+    scoreTxt.visible = false;
     if (gameplay_scene == undefined) {
         gameplay_scene = new GamePlayScene();
         gameplay_scene.pauseBtn.visible = false;
         gameplay_scene.pauseBtn.on(Laya.Event.CLICK, gameplay_scene, function () {
-            this.removeSelf();
             gameplay_scene.pause();
         })
+        gameplay_scene.addChild(scoreTxt);
     }
     Laya.stage.addChild(gameplay_scene);
-    gameplay_scene.restart();
+    gameplay_scene.start();
 }
 
 function showGamePause() {
     if (gamepause_scene == undefined) {
         gamepause_scene = new GamePauseScene();
         gamepause_scene.exitBtn.on(Laya.Event.CLICK, gamepause_scene, function () {
-            this.removeSelf();
+            gamepause_scene.removeSelf();
             if (gameplay_scene !== undefined) {
                 gameplay_scene.removeSelf();
             }
             showGameStart();
         })
-        gamepause_scene.restartBtn.on(Laya.Event.CLICK, gamepause_scene, function () {
-            this.removeSelf();
-            if (gamestart_scene !== undefined) {
-                gamestart_scene.removeSelf();
-            }
-            showGamePlay();
+        gamepause_scene.resumeBtn.on(Laya.Event.CLICK, gamepause_scene, function () {
+            gamepause_scene.removeSelf();
+            gameplay_scene.resume();
         })
     }
     Laya.stage.addChild(gamepause_scene);

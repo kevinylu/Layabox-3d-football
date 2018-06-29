@@ -15,7 +15,7 @@
         {
             "x":15,
             "type":"Button",
-            "props":{"y":513,"x":147,"var":"startBtn","skin":"comp/button.png","label":"START"},
+            "props":{"var":"startBtn","stateNum":"1","skin":"comp/asset-play-btn.png","scaleY":0.5,"scaleX":0.5,"centerX":0,"bottom":200},
             "nodeParent":1,
             "label":"Button(startBtn)",
             "isDirectory":false,
