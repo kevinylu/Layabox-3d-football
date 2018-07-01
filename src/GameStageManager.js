@@ -7,11 +7,9 @@ Laya.stage.scaleMode = Laya.Stage.SCALE_FIXED_WIDTH;
 //Show performance stat
 Laya.Stat.show();
 //Load 3D Assets
-var pitchRes = "res/3dAssets/pitch/pitch.ls";
 var skyBox1Res = "res/3dAssets/skyBox1/skyCube.ltc";
 var skyBox2Res = "res/3dAssets/skyBox2/skyCube.ltc";
-var footballRes = "res/3dAssets/football/ball.lh";
-Laya.loader.create([pitchRes, skyBox1Res, skyBox2Res, footballRes], Laya.Handler.create(this, on3DComplete));
+Laya.loader.create(['res/3dAssets/footballScene/pitch.ls',skyBox1Res, skyBox2Res], Laya.Handler.create(this, on3DComplete));
 //
 var gamestart_scene;
 var gameplay_scene;
@@ -101,31 +99,34 @@ cannonWorld.addBody(groundBody);
 
 //Laya 3d
 function on3DComplete() {
-    console.log("on3DComplete");
     //Add Unity scene 
-    main_scene = Laya.Scene.load(pitchRes);
+    main_scene = Laya.Scene.load('res/3dAssets/footballScene/pitch.ls');
     Laya.stage.addChild(main_scene);
 
     var scale = new Laya.Vector3();
     scale.x = scale.y = scale.z = 1;
-    ball = Laya.loader.getRes(footballRes);
+
+    ball = main_scene.getChildByName("football");
     ball.transform.localScale = scale;
-    main_scene.addChild(ball);
+    var footballScript = ball.addComponent(FootballScript);
     ballPosition = new Laya.Vector3(0, 0, 0);
     ball.transform.position = ballPosition;
 
+    shootTarget = main_scene.getChildByName("target");
+    var targetScript = shootTarget.addComponent(TargetScript);
+    targetPosition = new Laya.Vector3(0, 2.6, 11);
+    shootTarget.transform.position = targetPosition;
+
     //Create camera
-    camera = new Laya.Camera(0, 0.1, 1000);
+    camera = main_scene.getChildByName("Camera");
     camera.clearFlag = Laya.BaseCamera.CLEARFLAG_SKY;
-    //Add camera to scene
-    main_scene.addChild(camera);
 
     //Direction Light
     var directionLight = new Laya.DirectionLight();
     directionLight.ambientColor = new Laya.Vector3(0.6, 0.6, 0.6);
     directionLight.specularColor = new Laya.Vector3(0.6, 0.6, 0.6);
     directionLight.diffuseColor = new Laya.Vector3(2, 2, 2);
-    directionLight.direction = new Laya.Vector3(1, -1, 0);
+    directionLight.direction = new Laya.Vector3(1, -1, 2);
     main_scene.addChild(directionLight);
 
     skyBox1 = new Laya.SkyBox();
