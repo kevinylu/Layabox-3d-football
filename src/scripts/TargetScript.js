@@ -14,14 +14,16 @@ var TargetScript = (function (_super) {
 
     TargetScript.prototype.onTriggerEnter = function (other) {
         console.log("TargetScript.prototype.onTriggerEnter ");
+        this.owner.removeSelf();
+        gameplay_scene.onTargerEnter();
     }
     
     TargetScript.prototype.onTriggerStay = function (other) {
-        console.log("TargetScript.prototype.onTriggerStay ");
+        //console.log("TargetScript.prototype.onTriggerStay ");
     }
     
     TargetScript.prototype.onTriggerExit = function (other) {
-        console.log("TargetScript.prototype.onTriggerStay ");
+        //console.log("TargetScript.prototype.onTriggerStay ");
     }
     
     return TargetScript;

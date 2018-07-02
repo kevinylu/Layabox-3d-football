@@ -113,9 +113,7 @@ function on3DComplete() {
     ball.transform.position = ballPosition;
 
     shootTarget = main_scene.getChildByName("target");
-    var targetScript = shootTarget.addComponent(TargetScript);
-    targetPosition = new Laya.Vector3(0, 2.6, 11);
-    shootTarget.transform.position = targetPosition;
+    shootTarget.removeSelf();
 
     //Create camera
     camera = main_scene.getChildByName("Camera");

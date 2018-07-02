@@ -2,10 +2,12 @@ CLASS$(function () {
     this.__super.call(this);
     Laya.stage.on(Laya.Event.MOUSE_DOWN, this, onMouseDown);
     Laya.stage.on(Laya.Event.MOUSE_UP, this, onMouseUp);
+    resetTarget();
 }, 'GamePlayScene', ui.GamePlaySceneUI);
 
 var gameReady = false;
 var ballFlying = false;
+var targerEnter = true;
 
 var score = 0;
 var lostCount = 0;
@@ -60,6 +62,7 @@ function resetBall() {
         .onComplete(function () {
             settings.tweening = false;
             ballSphereBody.position = new CANNON.Vec3(ballPosition.x, ballPosition.z, ballPosition.y);
+            resetTarget();
         });
     relativeTween.start();
 }
@@ -80,10 +83,36 @@ function setCamaraPosition() {
     relativeTween.start();
 }
 
-function checkHitTarget() {
-    //TODO target
+function resetTarget() {
+    if (targerEnter) {
+        targerEnter = false;
+        shootTargetClone = shootTarget.clone();
+        main_scene.addChild(shootTargetClone);
+        shootTargetClone.addComponent(TargetScript);
+        //y 2.6 ~ 4.1
+        //x 4.5 ~ -4.5
+        console.log ('new random' + random(27, 40)/10);
+        console.log ('new random' + (random(0, 90) - 45)/10);
+        targetPosition = new Laya.Vector3((random(0, 90) - 45)/10, random(26, 41)/10, 11);
+        shootTargetClone.transform.position = targetPosition;
+    }
+}
+
+function random(min, max) {
+    return (Math.random() * ((max ? max : min) - (max ? min : 0) + 1) + (max ? min : 0)) | 0;
+}
+
+GamePlayScene.prototype.onTargerEnter = function () {
     score++;
     scoreTxt.text = score.toString();
+    targerEnter = true;
+}
+
+function checkHitTarget() {
+
+    if (targerEnter) {
+        return;
+    }
 
     lostCount++;
     switch (lostCount) {
