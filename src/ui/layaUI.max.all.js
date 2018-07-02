@@ -43,7 +43,7 @@ var GamePlaySceneUI=(function(_super){
 
 		}
 
-		GamePlaySceneUI.uiView={"type":"View","props":{"width":360,"height":640},"child":[{"type":"Button","props":{"var":"pauseBtn","top":20,"stateNum":1,"skin":"comp/asset-pause-btn.png","scaleY":0.5,"scaleX":0.5,"right":20}},{"type":"Image","props":{"var":"ballImage1","top":40,"skin":"comp/asset-football-icon.png","scaleY":0.05,"scaleX":0.05,"centerX":-40}},{"type":"Image","props":{"var":"ballImage2","top":40,"skin":"comp/asset-football-icon.png","scaleY":0.05,"scaleX":0.05,"centerX":0}},{"type":"Image","props":{"var":"ballImage3","top":40,"skin":"comp/asset-football-icon.png","scaleY":0.05,"scaleX":0.05,"centerX":40}}]};
+		GamePlaySceneUI.uiView={"type":"View","props":{"width":360,"height":640},"child":[{"type":"Button","props":{"var":"pauseBtn","top":20,"stateNum":1,"skin":"comp/asset-pause-btn.png","scaleY":0.5,"scaleX":0.5,"right":20}},{"type":"Image","props":{"var":"ballImage1","top":25,"skin":"comp/asset-football-icon.png","scaleY":0.05,"scaleX":0.05,"centerX":-40}},{"type":"Image","props":{"var":"ballImage2","top":25,"skin":"comp/asset-football-icon.png","scaleY":0.05,"scaleX":0.05,"centerX":0}},{"type":"Image","props":{"var":"ballImage3","top":25,"skin":"comp/asset-football-icon.png","scaleY":0.05,"scaleX":0.05,"centerX":40}}]};
 		return GamePlaySceneUI;
 	})(View);
 var GameStartSceneUI=(function(_super){
