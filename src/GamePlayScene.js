@@ -26,18 +26,23 @@ function onMouseUp() {
     touchEndPoint.elements[0] = Laya.stage.mouseX;
     touchEndPoint.elements[1] = Laya.stage.mouseY;
 
-    var point = new laya.maths.Point(touchBeginPoint.elements[0], touchBeginPoint.elements[1]);
-    var distance = point.distance(touchEndPoint.elements[0], touchEndPoint.elements[1]);
-    shootBall(distance);
+    shootBall();
 }
 
-function shootBall(distance) {
-    var h = distance / 30;
+function shootBall() {
+
+    var point = new laya.maths.Point(touchBeginPoint.elements[0], touchBeginPoint.elements[1]);
+
+    var hDistance = point.distance(touchEndPoint.elements[0], touchEndPoint.elements[1]);
+    var h = hDistance / 30;
     if (touchEndPoint.elements[0] - touchBeginPoint.elements[0] > 0) {
         h = -1 * h;
     }
 
-    var v = 2.16 + Math.abs(touchEndPoint.elements[1] - touchBeginPoint.elements[1]) / 60;
+    var centerPoint = new laya.maths.Point(180, 320);
+    var vDistance = centerPoint.distance(touchEndPoint.elements[0], touchEndPoint.elements[1]);
+
+    var v = 2.16 + vDistance / 100;
     var relativeTween = new TWEEN.Tween(ballPosition)
         .to({ x: h, y: v, z: 15 }, 500)
         .onUpdate(function (object) {
